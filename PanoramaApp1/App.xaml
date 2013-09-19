@@ -8,14 +8,25 @@
 
     <!--Application Resources-->
     <Application.Resources>
-        <sys:Double x:Key="PanoramaItemHeaderFontSize">66</sys:Double>
+        <sys:Double x:Key="PanoramaItemHeaderFontSize">80</sys:Double>
 
         <Style x:Key="PanoramaItemHeaderTextStyle" TargetType="TextBlock">
             <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiLight}"/>
             <Setter Property="FontSize" Value="{StaticResource PanoramaItemHeaderFontSize}"/>
             <Setter Property="CharacterSpacing" Value="-35"/>
         </Style>
-        
+        <DataTemplate x:Key="SmallPanoramaTitle">
+            <ContentPresenter>
+                <TextBlock Text="{Binding}" FontSize="20" Margin="0,40,0,0" />
+            </ContentPresenter>
+        </DataTemplate>
+        <DataTemplate x:Key="SmallPanoramaItemTitle">
+            <ContentPresenter>
+                <TextBlock Text="{Binding}" FontSize="40" Margin="0,0,0,0"/>
+            </ContentPresenter>
+        </DataTemplate>
+
+
         <local:LocalizedStrings xmlns:local="clr-namespace:PanoramaApp1" x:Key="LocalizedStrings"/>
     </Application.Resources>
 
