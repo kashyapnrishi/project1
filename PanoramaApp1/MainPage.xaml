@@ -18,7 +18,7 @@
     <Grid x:Name="LayoutRoot" Background="Transparent">
 
          <!--Panorama control-->
-        <phone:Panorama Title="Social Panorama" TitleTemplate="{StaticResource SmallPanoramaTitle}">
+        <phone:Panorama Title="Social Panorama" TitleTemplate="{StaticResource SmallPanoramaTitle}" x:Name="MainPanorama">
             <phone:Panorama.Background>
                 <ImageBrush ImageSource="/PanoramaApp1;component/Assets/PanoramaBackground.png"/>
             </phone:Panorama.Background>
@@ -36,26 +36,19 @@
 
 
             <!--Panorama item one-->
-            <phone:PanoramaItem Header="second item" Tap="PanoramaItem_Tap" HeaderTemplate="{StaticResource SmallPanoramaItemTitle}">
-                <Grid>
+            <phone:PanoramaItem Header="second item" Tap="PanoramaItem_Tap" HeaderTemplate="{StaticResource SmallPanoramaItemTitle}" >
+                <Grid Margin="0,-50,0,0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="10*"/>
                         <RowDefinition Height="90*"/>
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" x:Name="MiniBrowser1Url"></TextBlock>
-                    <phone:WebBrowser Grid.Row="1" x:Name="MiniBrowser1" Margin="1,1,1,20" Navigated="MiniBrowser1_Navigated" IsScriptEnabled="True"/>
+                    <phone:WebBrowser Grid.Row="1" x:Name="MiniBrowser1" Margin="1,1,1,20" Navigated="MiniBrowser1_Navigated" IsScriptEnabled="True" Padding="2,2,2,2"/>
                 </Grid>
             </phone:PanoramaItem>
 
 
-            <phone:PanoramaItem Header="second item" Tap="PanoramaItem_Tap" HeaderTemplate="{StaticResource SmallPanoramaItemTitle}">
-                <phone:WebBrowser x:Name="MiniBrowser2" Margin="1,1,1,20"/>
-            </phone:PanoramaItem>
-
-            <phone:PanoramaItem Header="second item" Tap="PanoramaItem_Tap" HeaderTemplate="{StaticResource SmallPanoramaItemTitle}">
-                <phone:WebBrowser x:Name="MiniBrowser3" Margin="1,1,1,20"/>
-            </phone:PanoramaItem>
-
+           
             <!--Panorama item two-->
 
         </phone:Panorama>

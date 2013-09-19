@@ -12,6 +12,11 @@ namespace PanoramaApp1
 {
     public partial class MainPage : PhoneApplicationPage
     {
+        const int NumberOfPanoramaItems = 3;
+        PanoramaItem[] pis;
+        WebBrowser[] browsers;
+
+
         // Constructor
         public MainPage()
         {
@@ -19,8 +24,29 @@ namespace PanoramaApp1
 
             // Set the data context of the listbox control to the sample data
             DataContext = App.ViewModel;
-
+            
             MiniBrowser1.Navigate(new Uri("http://www.facebook.com", UriKind.Absolute));
+            this.pis = new PanoramaItem[3];
+            this.browsers = new WebBrowser[3];
+            DataTemplate dt = (DataTemplate)App.Current.Resources["SmallPanoramaItemTitle"];
+
+            for(int i = 0; i < NumberOfPanoramaItems; i++)
+            {
+                this.pis[i] = new PanoramaItem();
+                this.pis[i].Header = "item " + i;
+                
+                this.pis[i].HeaderTemplate = dt;
+                var sp = new StackPanel();
+                sp.Margin = new Thickness(0, -50, 0, 0);
+                this.browsers[i] = new WebBrowser();
+                this.browsers[i].Height = 500;
+                this.browsers[i].Width = 500;                
+                this.browsers[i].Source = new Uri("http://www.google.com");
+                sp.Children.Add(browsers[i]);
+                this.pis[i].Content = sp;
+                MainPanorama.Items.Add(pis[i]);
+            }
+            
         }
 
         // Load data for the ViewModel Items
@@ -43,7 +69,7 @@ namespace PanoramaApp1
             WebBrowser b = (WebBrowser)sender;
             MiniBrowser1Url.Text = b.Source.ToString();
 
-
+            MainPanorama.DefaultItem = MainPanorama.Items[1];
         }
     }
 }
