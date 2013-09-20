@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using System.IO.IsolatedStorage;
 
 namespace PanoramaApp1
 {
@@ -15,12 +16,16 @@ namespace PanoramaApp1
         const int NumberOfPanoramaItems = 3;
         PanoramaItem[] pis;
         WebBrowser[] browsers;
-
+        public static IsolatedStorageSettings iss = IsolatedStorageSettings.ApplicationSettings;
+        
 
         // Constructor
         public MainPage()
         {
             InitializeComponent();
+
+
+            ViewModels.TheModel tm = ViewModels.TheModel.GetModel();
 
             // Set the data context of the listbox control to the sample data
             DataContext = App.ViewModel;
@@ -29,7 +34,17 @@ namespace PanoramaApp1
             this.pis = new PanoramaItem[3];
             this.browsers = new WebBrowser[3];
             DataTemplate dt = (DataTemplate)App.Current.Resources["SmallPanoramaItemTitle"];
+            
+            int value;
+            if(iss.TryGetValue("hello", out value))
+            {
 
+            }
+            else
+            {
+                iss.Add("hello", 10);
+            }
+            
             for(int i = 0; i < NumberOfPanoramaItems; i++)
             {
                 this.pis[i] = new PanoramaItem();

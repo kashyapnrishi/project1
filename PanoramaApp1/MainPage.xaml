@@ -24,13 +24,7 @@
             </phone:Panorama.Background>
 
             <phone:PanoramaItem Header="first item" FontSize="10">
-                <StackPanel>
-                    <ListBox FontSize="50">
-                        <ListBoxItem>
-                            <TextBox></TextBox></ListBoxItem>
-                        <ListBoxItem>Hello</ListBoxItem>
-                        <ListBoxItem>Hello</ListBoxItem>
-                    </ListBox>
+                <StackPanel x:Name="MainMenuStackPanel">
                 </StackPanel>
             </phone:PanoramaItem>
 
