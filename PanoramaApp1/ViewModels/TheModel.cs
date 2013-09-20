@@ -22,15 +22,16 @@ namespace PanoramaApp1.ViewModels
         private TheModel() {}
         public static TheModel GetModel() {
             if (theModel == null)
+            {
                 theModel = new TheModel();
 
-            if(!theModel.load())
-            {
-                theModel.initializeValuesForTheFirstTime();
-                theModel.saveData();
+                if (!theModel.load())
+                {
+                    theModel.initializeValuesForTheFirstTime();
+                    theModel.saveData();
+                }
             }
-
-             return theModel;
+            return theModel;
         }
         void initializeValuesForTheFirstTime()
         {
@@ -48,15 +49,34 @@ namespace PanoramaApp1.ViewModels
             linkNames[2] = "yahoo";
         }
 
-        void saveData()
-        {           
-            ISS.Add(str_linkCount, linkCount);
-            for(int i = 0;i < linkCount;i++)
+        void removeKey(string key)
+        {
+            try
             {
-                string key = str_linkName + i;
-                ISS.Add(key, linkNames[i]);
-                key = str_link + i;
-                ISS.Add(key, links[i]);
+                ISS.Remove(key);
+            }
+            catch (Exception)
+            { }
+        }
+
+        public void saveData()
+        {
+            removeKey(str_linkCount);
+            try
+            {
+                ISS.Add(str_linkCount, linkCount);
+                for (int i = 0; i < linkCount; i++)
+                {
+                    string key = str_linkName + i;
+                    removeKey(key);
+                    ISS.Add(key, linkNames[i]);
+                    key = str_link + i;
+                    removeKey(key);
+                    ISS.Add(key, links[i]);
+                }
+            }catch(Exception)
+            {
+               
             }
         }
 
