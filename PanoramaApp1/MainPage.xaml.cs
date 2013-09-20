@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
+using System.Windows.Input;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using System.IO.IsolatedStorage;
@@ -27,7 +28,7 @@ namespace PanoramaApp1
             // Set the data context of the listbox control to the sample data
             DataContext = App.ViewModel;
             
-            MiniBrowser1.Navigate(new Uri("http://www.facebook.com", UriKind.Absolute));
+            
             this.pis = new PanoramaItem[3];
             this.browsers = new WebBrowser[3];
             DataTemplate dt = (DataTemplate)App.Current.Resources["SmallPanoramaItemTitle"];
@@ -56,6 +57,17 @@ namespace PanoramaApp1
                 sp.Children.Add(browsers[i]);
                 this.pis[i].Content = sp;
                 MainPanorama.Items.Add(pis[i]);
+
+                var menuItem = new TextBlock();
+                menuItem.FontSize = 40;
+                menuItem.Margin = new Thickness(0, 0, 0, 20);
+                menuItem.Text = TM.linkNames[i];
+                menuItem.Tap+=new EventHandler<System.Windows.Input.GestureEventArgs>((object sender, GestureEventArgs args) => {
+                    MainPanorama.DefaultItem = MainPanorama.Items[myIndex +1];
+                });
+                MainMenuStackPanel.Children.Add(menuItem);
+
+
             }            
         }
 
@@ -68,17 +80,17 @@ namespace PanoramaApp1
             }
         }
 
-        private void PanoramaItem_Tap(object sender, System.Windows.Input.GestureEventArgs e)
-        {
-            MiniBrowser1.Navigate(new Uri("https://m.facebook.com", UriKind.Absolute));            
-        }
+        //private void PanoramaItem_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        //{
+        //    MiniBrowser1.Navigate(new Uri("https://m.facebook.com", UriKind.Absolute));            
+        //}
 
-        private void MiniBrowser1_Navigated(object sender, NavigationEventArgs e)
-        {
-            WebBrowser b = (WebBrowser)sender;
-            MiniBrowser1Url.Text = b.Source.ToString();
+        //private void MiniBrowser1_Navigated(object sender, NavigationEventArgs e)
+        //{
+        //    WebBrowser b = (WebBrowser)sender;
+        //    MiniBrowser1Url.Text = b.Source.ToString();
 
-            MainPanorama.DefaultItem = MainPanorama.Items[1];
-        }
+        //    MainPanorama.DefaultItem = MainPanorama.Items[1];
+        //}
     }
 }

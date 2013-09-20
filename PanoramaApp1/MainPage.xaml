@@ -29,20 +29,6 @@
             </phone:PanoramaItem>
 
 
-            <!--Panorama item one-->
-            <phone:PanoramaItem Header="second item" Tap="PanoramaItem_Tap" HeaderTemplate="{StaticResource SmallPanoramaItemTitle}" >
-                <Grid Margin="0,-50,0,0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="10*"/>
-                        <RowDefinition Height="90*"/>
-                    </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" x:Name="MiniBrowser1Url"></TextBlock>
-                    <phone:WebBrowser Grid.Row="1" x:Name="MiniBrowser1" Margin="1,1,1,20" Navigated="MiniBrowser1_Navigated" IsScriptEnabled="True" Padding="2,2,2,2"/>
-                </Grid>
-            </phone:PanoramaItem>
-
-
-           
             <!--Panorama item two-->
 
         </phone:Panorama>
