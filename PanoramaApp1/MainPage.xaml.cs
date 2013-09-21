@@ -18,6 +18,11 @@ namespace PanoramaApp1
         PanoramaItem[] pis;
         WebBrowser[] browsers;       
 
+
+        public void setupBrowsers()
+        {
+
+        }
         // Constructor
         public MainPage()
         {
@@ -29,8 +34,8 @@ namespace PanoramaApp1
             DataContext = App.ViewModel;
             
             
-            this.pis = new PanoramaItem[3];
-            this.browsers = new WebBrowser[3];
+            this.pis = new PanoramaItem[TM.linkCount];
+            this.browsers = new WebBrowser[TM.linkCount];
             DataTemplate dt = (DataTemplate)App.Current.Resources["SmallPanoramaItemTitle"];
             
            
