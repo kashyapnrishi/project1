@@ -75,7 +75,7 @@ namespace PanoramaApp1
             
            // setupMenuItems();
             setupBrowsers();
-            MainPanorama.DefaultItem = MainPanorama.Items[TM.defaultPanoramaItem + 1]; ;
+            MainPanorama.DefaultItem = MainPanorama.Items[TM.defaultPanoramaItem]; ;
         }
 
         protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
