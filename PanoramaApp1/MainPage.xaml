@@ -27,11 +27,11 @@
                 <ImageBrush ImageSource="/PanoramaApp1;component/Assets/PanoramaBackground.png"/>
             </phone:Panorama.Background>
 
-            <phone:PanoramaItem FontSize="10">
+            <!--<phone:PanoramaItem FontSize="10">
 
                 <StackPanel x:Name="MainMenuList"/>
 
-            </phone:PanoramaItem>
+            </phone:PanoramaItem>-->
 
         </phone:Panorama>
 
@@ -57,7 +57,7 @@
 
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" Mode="Minimized" IsMenuEnabled="True"  >
-            <shell:ApplicationBarIconButton IconUri="/Assets/ApplicationIcon.png" Text="Settings"  Click="ApplicationBarIcon_ResetClick"/>
+            <shell:ApplicationBarIconButton IconUri="/Assets/light/feature.settings.png" Text="Settings"  Click="ApplicationBarIcon_ResetClick"/>
         </shell:ApplicationBar>
 
     </phone:PhoneApplicationPage.ApplicationBar>

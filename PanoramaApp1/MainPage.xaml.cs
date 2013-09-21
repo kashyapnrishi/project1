@@ -18,79 +18,79 @@ namespace PanoramaApp1
         PanoramaItem[] pis;
         WebBrowser[] browsers;
 
-        public void setupMenuItems(bool calledFromWithin=false)
-        {
-            ViewModels.TheModel TM = ViewModels.TheModel.GetModel();
-            TM.selectedCount = 0;
-            for (int i = 0, j = 0; i < TM.linkCount; i++)
-            {
-                int selectedMyIndex = j;
-                int myIndex = i;
+        //public void setupMenuItems(bool calledFromWithin=false)
+        //{
+        //    ViewModels.TheModel TM = ViewModels.TheModel.GetModel();
+        //    TM.selectedCount = 0;
+        //    for (int i = 0, j = 0; i < TM.linkCount; i++)
+        //    {
+        //        int selectedMyIndex = j;
+        //        int myIndex = i;
 
-                var menuItem = new ListBoxItem();
-                var sp = new StackPanel();
-                sp.Orientation = System.Windows.Controls.Orientation.Horizontal;
-                var cb = new CheckBox();
-                cb.Unchecked += new RoutedEventHandler((object o, RoutedEventArgs a) =>
-                {
-                    TM.selectedCount--;
-                    TM.linksSelected[myIndex] = false;
-                });
+        //        var menuItem = new ListBoxItem();
+        //        var sp = new StackPanel();
+        //        sp.Orientation = System.Windows.Controls.Orientation.Horizontal;
+        //        var cb = new CheckBox();
+        //        cb.Unchecked += new RoutedEventHandler((object o, RoutedEventArgs a) =>
+        //        {
+        //            TM.selectedCount--;
+        //            TM.linksSelected[myIndex] = false;
+        //        });
 
-                cb.Checked += new RoutedEventHandler((object o, RoutedEventArgs a) =>
-                {
-                    if (TM.selectedCount >= 3)
-                    {
-                        ((CheckBox)o).IsChecked = false;
-                    }
-                    else
-                    {
-                        TM.linksSelected[myIndex] = true;
-                    }
-                    TM.selectedCount++;
-                });
+        //        cb.Checked += new RoutedEventHandler((object o, RoutedEventArgs a) =>
+        //        {
+        //            if (TM.selectedCount >= 3)
+        //            {
+        //                ((CheckBox)o).IsChecked = false;
+        //            }
+        //            else
+        //            {
+        //                TM.linksSelected[myIndex] = true;
+        //            }
+        //            TM.selectedCount++;
+        //        });
 
-                sp.Children.Add(cb);
-                var menuText = new TextBlock();
-                menuText.Text = TM.linkNames[i];
-                menuText.FontSize = 40;
-                sp.Children.Add(menuText);
-                menuItem.Content = sp; // 
-                if (TM.linksSelected[i])
-                {
-                    cb.IsChecked = true;
-                    menuText.Tap += new EventHandler<System.Windows.Input.GestureEventArgs>((object sender, GestureEventArgs args) =>
-                    {
-                        MainPanorama.DefaultItem = MainPanorama.Items[selectedMyIndex + 1];
-                    });
-                    j++;
-                }
+        //        sp.Children.Add(cb);
+        //        var menuText = new TextBlock();
+        //        menuText.Text = TM.linkNames[i];
+        //        menuText.FontSize = 40;
+        //        sp.Children.Add(menuText);
+        //        menuItem.Content = sp; // 
+        //        if (TM.linksSelected[i])
+        //        {
+        //            cb.IsChecked = true;
+        //            menuText.Tap += new EventHandler<System.Windows.Input.GestureEventArgs>((object sender, GestureEventArgs args) =>
+        //            {
+        //                MainPanorama.DefaultItem = MainPanorama.Items[selectedMyIndex + 1];
+        //            });
+        //            j++;
+        //        }
 
-                MainMenuList.Children.Add(menuItem);
-            }
+        //        MainMenuList.Children.Add(menuItem);
+        //    }
 
 
-            if (!calledFromWithin)
-            {
-                Button updateButton = new Button();
-                updateButton.Content = "Click";
-                updateButton.Click += new RoutedEventHandler((object sender, RoutedEventArgs e) =>
-                {
-                    try
-                    {
-                        foreach (var pi in pis)
-                        {
-                            MainPanorama.Items.Remove(pi);
-                        }
-                        TM.defaultPanoramaItem = 0;
-                    }
-                    catch (Exception) { }
-                    setupBrowsers();                    
-                    //NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
-                });
-                MainMenuList.Children.Add(updateButton);
-            }
-        }
+        //    if (!calledFromWithin)
+        //    {
+        //        Button updateButton = new Button();
+        //        updateButton.Content = "Click";
+        //        updateButton.Click += new RoutedEventHandler((object sender, RoutedEventArgs e) =>
+        //        {
+        //            try
+        //            {
+        //                foreach (var pi in pis)
+        //                {
+        //                    MainPanorama.Items.Remove(pi);
+        //                }
+        //                TM.defaultPanoramaItem = 0;
+        //            }
+        //            catch (Exception) { }
+        //            setupBrowsers();                    
+        //            //NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+        //        });
+        //        MainMenuList.Children.Add(updateButton);
+        //    }
+        //}
         public void setupBrowsers()
         {
             ViewModels.TheModel TM = ViewModels.TheModel.GetModel();
@@ -139,8 +139,9 @@ namespace PanoramaApp1
             // Set the data context of the listbox control to the sample data
             DataContext = App.ViewModel;
 
+            
+           // setupMenuItems();
             setupBrowsers();
-            setupMenuItems();
             MainPanorama.DefaultItem = MainPanorama.Items[TM.defaultPanoramaItem + 1]; ;
         }
 
@@ -151,11 +152,22 @@ namespace PanoramaApp1
             {
                 App.ViewModel.LoadData();
             }
+            else
+            {
+                foreach (var pi in pis)
+                {
+                    MainPanorama.Items.Remove(pi);
+                }
+                setupBrowsers();
+            }
+
+
         }
 
         private void ApplicationBarIcon_ResetClick(object sender, EventArgs e)
         {
-            MainPanorama.DefaultItem = MainPanorama.Items[0];
+       //     MainPanorama.DefaultItem = MainPanorama.Items[0];
+            this.NavigationService.Navigate(new Uri("/Settings.xaml", UriKind.RelativeOrAbsolute));
         }
 
         private void adPubCenter_ErrorOccurred_1(object sender, Microsoft.Advertising.AdErrorEventArgs e)
