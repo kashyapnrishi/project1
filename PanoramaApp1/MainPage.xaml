@@ -21,15 +21,16 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="80"/>
         </Grid.RowDefinitions>
-            <!--Panorama control-->
+        <!--Panorama control-->
         <phone:Panorama Grid.Row="0" Title="Social Panorama" TitleTemplate="{StaticResource SmallPanoramaTitle}" x:Name="MainPanorama">
             <phone:Panorama.Background>
                 <ImageBrush ImageSource="/PanoramaApp1;component/Assets/PanoramaBackground.png"/>
             </phone:Panorama.Background>
 
             <phone:PanoramaItem FontSize="10">
-                <StackPanel x:Name="MainMenuStackPanel">
-                </StackPanel>
+
+                <ListBox SelectionMode="Multiple" x:Name="MainMenuList"/>
+
             </phone:PanoramaItem>
 
         </phone:Panorama>
@@ -56,7 +57,7 @@
 
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" Mode="Minimized" IsMenuEnabled="True"  >
-            <shell:ApplicationBarIconButton IconUri="/Images/CCleaner.png" Text="Settings"  Click="ApplicationBarIcon_ResetClick"/>
+            <shell:ApplicationBarIconButton IconUri="/Assets/ApplicationIcon.png" Text="Settings"  Click="ApplicationBarIcon_ResetClick"/>
         </shell:ApplicationBar>
 
     </phone:PhoneApplicationPage.ApplicationBar>

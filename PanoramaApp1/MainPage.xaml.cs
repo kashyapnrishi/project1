@@ -51,20 +51,27 @@ namespace PanoramaApp1
                     TM.links[myIndex] = b.Source.ToString();
                 });
                 pis[i].Content = browsers[i];
-                MainPanorama.Items.Add(pis[i]);
+                MainPanorama.Items.Add(pis[i]);                
 
                 pis[i].GotFocus += new RoutedEventHandler((object o, RoutedEventArgs a) => {
                     TM.defaultPanoramaItem = myIndex;
                 });
 
-                var menuItem = new TextBlock();
-                menuItem.FontSize = 40;
-                menuItem.Margin = new Thickness(0, 0, 0, 20);
-                menuItem.Text = TM.linkNames[i];
-                menuItem.Tap+=new EventHandler<System.Windows.Input.GestureEventArgs>((object sender, GestureEventArgs args) => {
+                var menuItem = new ListBoxItem();
+                var sp = new StackPanel();
+                sp.Orientation = System.Windows.Controls.Orientation.Horizontal;
+                var cb = new CheckBox();
+                sp.Children.Add(cb);
+                var menuText = new TextBlock();
+                menuText.Text = TM.linkNames[i]; 
+                menuText.FontSize = 40;
+                sp.Children.Add(menuText);                
+                menuItem.Content = sp; // 
+                menuText.Tap+=new EventHandler<System.Windows.Input.GestureEventArgs>((object sender, GestureEventArgs args) => {
                     MainPanorama.DefaultItem = MainPanorama.Items[myIndex +1];                    
                 });
-                MainMenuStackPanel.Children.Add(menuItem);
+                
+                MainMenuList.Items.Add(menuItem);
             }
             MainPanorama.DefaultItem = MainPanorama.Items[TM.defaultPanoramaItem + 1]; ;
         }
