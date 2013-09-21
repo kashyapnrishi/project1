@@ -28,9 +28,6 @@
                 </StackPanel>
             </phone:PanoramaItem>
 
-
-            <!--Panorama item two-->
-
         </phone:Panorama>
 
         <!--Uncomment to see an alignment grid to help ensure your controls are

@@ -40,22 +40,15 @@ namespace PanoramaApp1
                 this.pis[i].Header = TM.linkNames[i];
                 
                 this.pis[i].HeaderTemplate = dt;
-                var sp = new StackPanel();                
-                sp.Margin = new Thickness(0, -50, 0, 0);
                 this.browsers[i] = new WebBrowser();
-                this.browsers[i].Height = 500;
-                this.browsers[i].Width = 500;                
                 this.browsers[i].Source = new Uri(TM.links[i]);
-                var tb = new TextBox();
                 int myIndex = i;
+                browsers[i].IsScriptEnabled = true;                
                 this.browsers[i].Navigated += new EventHandler<NavigationEventArgs>((object sender, NavigationEventArgs e) => {
                     WebBrowser b = (WebBrowser)sender;                    
                     TM.links[myIndex] = b.Source.ToString();
-                    tb.Text = TM.links[myIndex];
                 });
-                sp.Children.Add(tb);
-                sp.Children.Add(browsers[i]);
-                this.pis[i].Content = sp;
+                this.pis[i].Content = browsers[i];
                 MainPanorama.Items.Add(pis[i]);
 
                 var menuItem = new TextBlock();
