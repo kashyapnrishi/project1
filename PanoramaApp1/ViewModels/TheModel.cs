@@ -23,6 +23,7 @@ namespace PanoramaApp1.ViewModels
         public string[] links;
         public string[] linkNames;
         public bool[] linksSelected;
+        public int selectedCount;
 
         private TheModel() {}
         public static TheModel GetModel() {
@@ -41,6 +42,7 @@ namespace PanoramaApp1.ViewModels
         void initializeValuesForTheFirstTime()
         {
             linkCount = 5;
+            selectedCount = 3;
             defaultPanoramaItem = 0;
 
             links = new string[linkCount];
@@ -115,6 +117,7 @@ namespace PanoramaApp1.ViewModels
             links = new string[linkCount];            
             linkNames = new string[linkCount];
             linksSelected = new bool[linkCount];
+            selectedCount = 0;
             for (int i = 0; i < linkCount; i++)
             {
                 string key = str_linkName + i;
@@ -123,6 +126,7 @@ namespace PanoramaApp1.ViewModels
                 ISS.TryGetValue(key, out links[i]);
                 key = str_linkSelected + i;
                 ISS.TryGetValue(key, out linksSelected[i]);
+                if (linksSelected[i]) selectedCount++;
             }
 
             return true;

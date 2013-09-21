@@ -18,10 +18,72 @@ namespace PanoramaApp1
         PanoramaItem[] pis;
         WebBrowser[] browsers;       
 
+        public void setupMenuItems()
+        {
+            ViewModels.TheModel TM = ViewModels.TheModel.GetModel();
 
+            for (int i = 0, j = 0; i < TM.linkCount; i++)
+            {
+                int myIndex = j;
+
+                var menuItem = new ListBoxItem();
+                var sp = new StackPanel();
+                sp.Orientation = System.Windows.Controls.Orientation.Horizontal;
+                var cb = new CheckBox();
+                sp.Children.Add(cb);
+                var menuText = new TextBlock();
+                menuText.Text = TM.linkNames[i];
+                menuText.FontSize = 40;
+                sp.Children.Add(menuText);
+                menuItem.Content = sp; // 
+                if (TM.linksSelected[i])
+                {
+                    menuText.Tap += new EventHandler<System.Windows.Input.GestureEventArgs>((object sender, GestureEventArgs args) =>
+                    {
+                        MainPanorama.DefaultItem = MainPanorama.Items[myIndex + 1];
+                    });
+                    j++;
+                }
+
+                MainMenuList.Items.Add(menuItem);
+
+            }
+
+        }
         public void setupBrowsers()
         {
+            ViewModels.TheModel TM = ViewModels.TheModel.GetModel();
+            pis = new PanoramaItem[TM.selectedCount];
+            browsers = new WebBrowser[TM.selectedCount];
+            DataTemplate dt = (DataTemplate)App.Current.Resources["SmallPanoramaItemTitle"];
 
+            for(int i = 0, j=0; i < TM.linkCount; i++)
+            {
+                if (!TM.linksSelected[i])
+                    continue;
+                int myIndex = j;
+                j++;
+
+                pis[myIndex] = new PanoramaItem();
+                pis[myIndex].Header = "";
+                pis[myIndex].HeaderTemplate = dt;
+                browsers[myIndex] = new WebBrowser();
+                browsers[myIndex].Source = new Uri(TM.links[i]);
+                browsers[myIndex].IsScriptEnabled = true;
+                browsers[myIndex].Margin = new Thickness(0, -25, 0, 0);               
+                
+                browsers[myIndex].Navigated += new EventHandler<NavigationEventArgs>((object sender, NavigationEventArgs e) => {
+                    WebBrowser b = (WebBrowser)sender;                    
+                    TM.links[myIndex] = b.Source.ToString();
+                });
+
+                pis[myIndex].Content = browsers[myIndex];
+                MainPanorama.Items.Add(pis[myIndex]);                
+
+                pis[myIndex].GotFocus += new RoutedEventHandler((object o, RoutedEventArgs a) => {
+                    TM.defaultPanoramaItem = myIndex;
+                });
+            }
         }
         // Constructor
         public MainPage()
@@ -33,51 +95,8 @@ namespace PanoramaApp1
             // Set the data context of the listbox control to the sample data
             DataContext = App.ViewModel;
             
-            
-            this.pis = new PanoramaItem[TM.linkCount];
-            this.browsers = new WebBrowser[TM.linkCount];
-            DataTemplate dt = (DataTemplate)App.Current.Resources["SmallPanoramaItemTitle"];
-            
-           
-            for(int i = 0; i < TM.linkCount; i++)
-            {
-                pis[i] = new PanoramaItem();
-                pis[i].Header = "";                
-
-                pis[i].HeaderTemplate = dt;
-                browsers[i] = new WebBrowser();
-                browsers[i].Source = new Uri(TM.links[i]);
-                browsers[i].IsScriptEnabled = true;
-                browsers[i].Margin = new Thickness(0, -25, 0, 0);
-                int myIndex = i;
-                
-                browsers[i].Navigated += new EventHandler<NavigationEventArgs>((object sender, NavigationEventArgs e) => {
-                    WebBrowser b = (WebBrowser)sender;                    
-                    TM.links[myIndex] = b.Source.ToString();
-                });
-                pis[i].Content = browsers[i];
-                MainPanorama.Items.Add(pis[i]);                
-
-                pis[i].GotFocus += new RoutedEventHandler((object o, RoutedEventArgs a) => {
-                    TM.defaultPanoramaItem = myIndex;
-                });
-
-                var menuItem = new ListBoxItem();
-                var sp = new StackPanel();
-                sp.Orientation = System.Windows.Controls.Orientation.Horizontal;
-                var cb = new CheckBox();
-                sp.Children.Add(cb);
-                var menuText = new TextBlock();
-                menuText.Text = TM.linkNames[i]; 
-                menuText.FontSize = 40;
-                sp.Children.Add(menuText);                
-                menuItem.Content = sp; // 
-                menuText.Tap+=new EventHandler<System.Windows.Input.GestureEventArgs>((object sender, GestureEventArgs args) => {
-                    MainPanorama.DefaultItem = MainPanorama.Items[myIndex +1];                    
-                });
-                
-                MainMenuList.Items.Add(menuItem);
-            }
+            setupBrowsers();
+            setupMenuItems();
             MainPanorama.DefaultItem = MainPanorama.Items[TM.defaultPanoramaItem + 1]; ;
         }
 
