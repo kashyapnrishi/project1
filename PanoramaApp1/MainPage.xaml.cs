@@ -82,27 +82,28 @@ namespace PanoramaApp1
             {
                 if (!TM.linksSelected[i])
                     continue;
-                int myIndex = j;
+                int mySelectedIndex = j;
+                int myIndex = i;
                 j++;
 
-                pis[myIndex] = new PanoramaItem();
-                pis[myIndex].Header = "";
-                pis[myIndex].HeaderTemplate = dt;
-                browsers[myIndex] = new WebBrowser();
-                browsers[myIndex].Source = new Uri(TM.links[i]);
-                browsers[myIndex].IsScriptEnabled = true;
-                browsers[myIndex].Margin = new Thickness(0, -25, 0, 0);               
+                pis[mySelectedIndex] = new PanoramaItem();
+                pis[mySelectedIndex].Header = "";
+                pis[mySelectedIndex].HeaderTemplate = dt;
+                browsers[mySelectedIndex] = new WebBrowser();
+                browsers[mySelectedIndex].Source = new Uri(TM.links[i]);
+                browsers[mySelectedIndex].IsScriptEnabled = true;
+                browsers[mySelectedIndex].Margin = new Thickness(0, -25, 0, 0);               
                 
-                browsers[myIndex].Navigated += new EventHandler<NavigationEventArgs>((object sender, NavigationEventArgs e) => {
+                browsers[mySelectedIndex].Navigated += new EventHandler<NavigationEventArgs>((object sender, NavigationEventArgs e) => {
                     WebBrowser b = (WebBrowser)sender;                    
                     TM.links[myIndex] = b.Source.ToString();
                 });
 
-                pis[myIndex].Content = browsers[myIndex];
-                MainPanorama.Items.Add(pis[myIndex]);                
+                pis[mySelectedIndex].Content = browsers[mySelectedIndex];
+                MainPanorama.Items.Add(pis[mySelectedIndex]);                
 
-                pis[myIndex].GotFocus += new RoutedEventHandler((object o, RoutedEventArgs a) => {
-                    TM.defaultPanoramaItem = myIndex;
+                pis[mySelectedIndex].GotFocus += new RoutedEventHandler((object o, RoutedEventArgs a) => {
+                    TM.defaultPanoramaItem = mySelectedIndex;
                 });
             }
         }
