@@ -84,7 +84,6 @@ namespace PanoramaApp1
             {
                 e.Cancel = true;
                 browsers[MainPanorama.SelectedIndex].GoBack();
-                return;
             }
             base.OnBackKeyPress(e);
         }
