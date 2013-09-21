@@ -78,6 +78,16 @@ namespace PanoramaApp1
 
         }
 
+        private void adPubCenter_ErrorOccurred_1(object sender, Microsoft.Advertising.AdErrorEventArgs e)
+        {
+
+        }
+
+        private void adPubCenter_AdRefreshed_1(object sender, EventArgs e)
+        {
+
+        }
+
         //private void PanoramaItem_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         //{
         //    MiniBrowser1.Navigate(new Uri("https://m.facebook.com", UriKind.Absolute));            

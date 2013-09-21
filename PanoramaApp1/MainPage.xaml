@@ -12,18 +12,22 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="PortraitOrLandscape"  Orientation="Portrait"    
-    shell:SystemTray.IsVisible="False">
+    shell:SystemTray.IsVisible="False"
+     xmlns:adControl="clr-namespace:Microsoft.Advertising.Mobile.UI;assembly=Microsoft.Advertising.Mobile.UI">
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
-
-         <!--Panorama control-->
-        <phone:Panorama Title="Social Panorama" TitleTemplate="{StaticResource SmallPanoramaTitle}" x:Name="MainPanorama">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="80"/>
+        </Grid.RowDefinitions>
+            <!--Panorama control-->
+        <phone:Panorama Grid.Row="0" Title="Social Panorama" TitleTemplate="{StaticResource SmallPanoramaTitle}" x:Name="MainPanorama">
             <phone:Panorama.Background>
                 <ImageBrush ImageSource="/PanoramaApp1;component/Assets/PanoramaBackground.png"/>
             </phone:Panorama.Background>
 
-            <phone:PanoramaItem Header="My List" FontSize="10">
+            <phone:PanoramaItem FontSize="10">
                 <StackPanel x:Name="MainMenuStackPanel">
                 </StackPanel>
             </phone:PanoramaItem>
@@ -38,11 +42,21 @@
             Before shipping remove this XAML and the image itself.-->
         <!--<Image Source="/Assets/AlignmentGrid.png" VerticalAlignment="Top" Height="800" Width="480" Margin="0" Grid.Row="0" Grid.RowSpan="2" IsHitTestVisible="False" />-->
 
+        <adControl:AdControl Grid.Row="1" Name="adPubCenter" 
+                                
+                                 IsAutoRefreshEnabled="True" 
+                                 ErrorOccurred="adPubCenter_ErrorOccurred_1"  
+                                 AdRefreshed="adPubCenter_AdRefreshed_1"  
+                                 AdUnitId="10140244" 
+                                 ApplicationId="88cae9be-e218-47cc-96bf-e2ad77f6384f"
+                                 Height="80" HorizontalAlignment="Left"   
+                                 VerticalAlignment="Top" Width="480" Margin="0,0,-24,0" />
+
     </Grid>
 
     <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True"  >
-            <shell:ApplicationBarIconButton IconUri="/Images/CCleaner.png" Text="Settings" Click="ApplicationBarIcon_ResetClick"/>
+        <shell:ApplicationBar IsVisible="True" Mode="Minimized" IsMenuEnabled="True"  >
+            <shell:ApplicationBarIconButton IconUri="/Images/CCleaner.png" Text="Settings"  Click="ApplicationBarIcon_ResetClick"/>
         </shell:ApplicationBar>
 
     </phone:PhoneApplicationPage.ApplicationBar>
