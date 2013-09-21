@@ -45,13 +45,6 @@ namespace PanoramaApp1
 
                 browsers[mySelectedIndex].Margin = new Thickness(0, -25, 0, 0);
 
-                browsers[mySelectedIndex].Navigated += new EventHandler<NavigationEventArgs>((object sender, NavigationEventArgs e) =>
-                {
-                    WebBrowser b = (WebBrowser)sender;
-                    
-                   // TM.links[myIndex] = b.Source.ToString();
-                });
-
                 pis[mySelectedIndex].Content = browsers[mySelectedIndex];
                 MainPanorama.Items.Add(pis[mySelectedIndex]);
 
