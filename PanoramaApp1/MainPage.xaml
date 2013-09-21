@@ -29,7 +29,7 @@
 
             <phone:PanoramaItem FontSize="10">
 
-                <ListBox SelectionMode="Multiple" x:Name="MainMenuList"/>
+                <StackPanel x:Name="MainMenuList"/>
 
             </phone:PanoramaItem>
 

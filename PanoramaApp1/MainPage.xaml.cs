@@ -38,6 +38,7 @@ namespace PanoramaApp1
                 menuItem.Content = sp; // 
                 if (TM.linksSelected[i])
                 {
+                    cb.IsChecked = true;
                     menuText.Tap += new EventHandler<System.Windows.Input.GestureEventArgs>((object sender, GestureEventArgs args) =>
                     {
                         MainPanorama.DefaultItem = MainPanorama.Items[myIndex + 1];
@@ -45,7 +46,7 @@ namespace PanoramaApp1
                     j++;
                 }
 
-                MainMenuList.Items.Add(menuItem);
+                MainMenuList.Children.Add(menuItem);
 
             }
 

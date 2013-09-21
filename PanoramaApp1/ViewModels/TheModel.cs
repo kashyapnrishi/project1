@@ -68,8 +68,6 @@ namespace PanoramaApp1.ViewModels
             links[4] = "https://www.linkedin.com";
             linkNames[4] = "linkendin";
             linksSelected[4] = false;
-
-
         }
 
         void removeKey(string key)
