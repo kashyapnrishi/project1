@@ -13,9 +13,12 @@ namespace PanoramaApp1.ViewModels
         private static TheModel theModel;
 
         static readonly string str_linkCount = "link_count";
+        static readonly string str_defaultPanoramaItem = "defaultPanoramaItem";
         static readonly string str_linkName = "link_name";
         static readonly string str_link = "link_";
+        
         public int linkCount;
+        public int defaultPanoramaItem;
         public string[] links;
         public string[] linkNames;
 
@@ -36,6 +39,8 @@ namespace PanoramaApp1.ViewModels
         void initializeValuesForTheFirstTime()
         {
             linkCount = 3;
+            defaultPanoramaItem = 0;
+
             links = new string[linkCount];
             linkNames = new string[linkCount];
 
@@ -62,9 +67,11 @@ namespace PanoramaApp1.ViewModels
         public void saveData()
         {
             removeKey(str_linkCount);
+            removeKey(str_defaultPanoramaItem);
             try
             {
                 ISS.Add(str_linkCount, linkCount);
+                ISS.Add(str_defaultPanoramaItem, defaultPanoramaItem);
                 for (int i = 0; i < linkCount; i++)
                 {
                     string key = str_linkName + i;
@@ -86,8 +93,8 @@ namespace PanoramaApp1.ViewModels
             {
                 return false;
             }
-
-            links = new string[linkCount];
+            ISS.TryGetValue(str_defaultPanoramaItem, out defaultPanoramaItem);
+            links = new string[linkCount];            
             linkNames = new string[linkCount];
             for (int i = 0; i < linkCount; i++)
             {

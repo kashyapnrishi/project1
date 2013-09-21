@@ -33,12 +33,12 @@ namespace PanoramaApp1
             this.browsers = new WebBrowser[3];
             DataTemplate dt = (DataTemplate)App.Current.Resources["SmallPanoramaItemTitle"];
             
-            
+           
             for(int i = 0; i < TM.linkCount; i++)
             {
                 pis[i] = new PanoramaItem();
-                pis[i].Header = "";
-                
+                pis[i].Header = "";                
+
                 pis[i].HeaderTemplate = dt;
                 browsers[i] = new WebBrowser();
                 browsers[i].Source = new Uri(TM.links[i]);
@@ -46,24 +46,27 @@ namespace PanoramaApp1
                 browsers[i].Margin = new Thickness(0, -25, 0, 0);
                 int myIndex = i;
                 
-                this.browsers[i].Navigated += new EventHandler<NavigationEventArgs>((object sender, NavigationEventArgs e) => {
+                browsers[i].Navigated += new EventHandler<NavigationEventArgs>((object sender, NavigationEventArgs e) => {
                     WebBrowser b = (WebBrowser)sender;                    
                     TM.links[myIndex] = b.Source.ToString();
                 });
                 pis[i].Content = browsers[i];
                 MainPanorama.Items.Add(pis[i]);
 
+                pis[i].GotFocus += new RoutedEventHandler((object o, RoutedEventArgs a) => {
+                    TM.defaultPanoramaItem = myIndex;
+                });
+
                 var menuItem = new TextBlock();
                 menuItem.FontSize = 40;
                 menuItem.Margin = new Thickness(0, 0, 0, 20);
                 menuItem.Text = TM.linkNames[i];
                 menuItem.Tap+=new EventHandler<System.Windows.Input.GestureEventArgs>((object sender, GestureEventArgs args) => {
-                    MainPanorama.DefaultItem = MainPanorama.Items[myIndex +1];
+                    MainPanorama.DefaultItem = MainPanorama.Items[myIndex +1];                    
                 });
                 MainMenuStackPanel.Children.Add(menuItem);
-
-
-            }            
+            }
+            MainPanorama.DefaultItem = MainPanorama.Items[TM.defaultPanoramaItem + 1]; ;
         }
 
         // Load data for the ViewModel Items
