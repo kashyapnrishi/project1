@@ -36,19 +36,21 @@ namespace PanoramaApp1
             
             for(int i = 0; i < TM.linkCount; i++)
             {
-                this.pis[i] = new PanoramaItem();
-                this.pis[i].Header = TM.linkNames[i];
+                pis[i] = new PanoramaItem();
+                pis[i].Header = "";
                 
-                this.pis[i].HeaderTemplate = dt;
-                this.browsers[i] = new WebBrowser();
-                this.browsers[i].Source = new Uri(TM.links[i]);
+                pis[i].HeaderTemplate = dt;
+                browsers[i] = new WebBrowser();
+                browsers[i].Source = new Uri(TM.links[i]);
+                browsers[i].IsScriptEnabled = true;
+                browsers[i].Margin = new Thickness(0, -25, 0, 0);
                 int myIndex = i;
-                browsers[i].IsScriptEnabled = true;     
+                
                 this.browsers[i].Navigated += new EventHandler<NavigationEventArgs>((object sender, NavigationEventArgs e) => {
                     WebBrowser b = (WebBrowser)sender;                    
                     TM.links[myIndex] = b.Source.ToString();
                 });
-                this.pis[i].Content = browsers[i];
+                pis[i].Content = browsers[i];
                 MainPanorama.Items.Add(pis[i]);
 
                 var menuItem = new TextBlock();
@@ -75,7 +77,7 @@ namespace PanoramaApp1
 
         private void ApplicationBarIcon_ResetClick(object sender, EventArgs e)
         {
-
+            MainPanorama.DefaultItem = MainPanorama.Items[0];
         }
 
         private void adPubCenter_ErrorOccurred_1(object sender, Microsoft.Advertising.AdErrorEventArgs e)
