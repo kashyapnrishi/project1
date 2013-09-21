@@ -49,7 +49,7 @@ namespace PanoramaApp1.ViewModels
             linkNames = new string[linkCount];
             linksSelected = new bool[linkCount];
 
-            links[0] = "https://m.facebook.com";
+            links[0] = "https://touch.facebook.com";
             linkNames[0] = "facebook";
             linksSelected[0] = true;
 
