@@ -97,6 +97,7 @@ namespace PanoramaApp1.ViewModels
                     removeKey(key);
                     ISS.Add(key, links[i]);
                     key = str_linkSelected + i;
+                    removeKey(key);
                     ISS.Add(key, linksSelected[i]);
                 }
             }catch(Exception)

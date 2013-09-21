@@ -24,7 +24,8 @@ namespace PanoramaApp1
             TM.selectedCount = 0;
             for (int i = 0, j = 0; i < TM.linkCount; i++)
             {
-                int myIndex = j;
+                int selectedMyIndex = j;
+                int myIndex = i;
 
                 var menuItem = new ListBoxItem();
                 var sp = new StackPanel();
@@ -33,12 +34,19 @@ namespace PanoramaApp1
                 cb.Unchecked += new RoutedEventHandler((object o, RoutedEventArgs a) =>
                 {
                     TM.selectedCount--;
+                    TM.linksSelected[myIndex] = false;
                 });
 
                 cb.Checked += new RoutedEventHandler((object o, RoutedEventArgs a) =>
                 {
                     if (TM.selectedCount >= 3)
-                        ((CheckBox)o).IsChecked = false;
+                    {
+                        ((CheckBox)o).IsChecked = false;                        
+                    }
+                    else 
+                    {
+                        TM.linksSelected[myIndex] = true;
+                    }
                     TM.selectedCount++;
                 });
 
@@ -53,7 +61,7 @@ namespace PanoramaApp1
                     cb.IsChecked = true;
                     menuText.Tap += new EventHandler<System.Windows.Input.GestureEventArgs>((object sender, GestureEventArgs args) =>
                     {
-                        MainPanorama.DefaultItem = MainPanorama.Items[myIndex + 1];
+                        MainPanorama.DefaultItem = MainPanorama.Items[selectedMyIndex + 1];
                     });
                     j++;
                 }
