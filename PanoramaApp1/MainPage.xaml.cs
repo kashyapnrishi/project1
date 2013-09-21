@@ -43,7 +43,7 @@ namespace PanoramaApp1
                 this.browsers[i] = new WebBrowser();
                 this.browsers[i].Source = new Uri(TM.links[i]);
                 int myIndex = i;
-                browsers[i].IsScriptEnabled = true;                
+                browsers[i].IsScriptEnabled = true;     
                 this.browsers[i].Navigated += new EventHandler<NavigationEventArgs>((object sender, NavigationEventArgs e) => {
                     WebBrowser b = (WebBrowser)sender;                    
                     TM.links[myIndex] = b.Source.ToString();
@@ -71,6 +71,11 @@ namespace PanoramaApp1
             {
                 App.ViewModel.LoadData();
             }
+        }
+
+        private void ApplicationBarIcon_ResetClick(object sender, EventArgs e)
+        {
+
         }
 
         //private void PanoramaItem_Tap(object sender, System.Windows.Input.GestureEventArgs e)
