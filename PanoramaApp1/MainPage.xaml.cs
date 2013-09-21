@@ -14,11 +14,11 @@ namespace PanoramaApp1
 {
     public partial class MainPage : PhoneApplicationPage
     {
-        
-        PanoramaItem[] pis;
-        WebBrowser[] browsers;       
 
-        public void setupMenuItems()
+        PanoramaItem[] pis;
+        WebBrowser[] browsers;
+
+        public void setupMenuItems(bool calledFromWithin=false)
         {
             ViewModels.TheModel TM = ViewModels.TheModel.GetModel();
             TM.selectedCount = 0;
@@ -41,9 +41,9 @@ namespace PanoramaApp1
                 {
                     if (TM.selectedCount >= 3)
                     {
-                        ((CheckBox)o).IsChecked = false;                        
+                        ((CheckBox)o).IsChecked = false;
                     }
-                    else 
+                    else
                     {
                         TM.linksSelected[myIndex] = true;
                     }
@@ -67,9 +67,29 @@ namespace PanoramaApp1
                 }
 
                 MainMenuList.Children.Add(menuItem);
-
             }
 
+
+            if (!calledFromWithin)
+            {
+                Button updateButton = new Button();
+                updateButton.Content = "Click";
+                updateButton.Click += new RoutedEventHandler((object sender, RoutedEventArgs e) =>
+                {
+                    try
+                    {
+                        foreach (var pi in pis)
+                        {
+                            MainPanorama.Items.Remove(pi);
+                        }
+                        TM.defaultPanoramaItem = 0;
+                    }
+                    catch (Exception) { }
+                    setupBrowsers();                    
+                    //NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+                });
+                MainMenuList.Children.Add(updateButton);
+            }
         }
         public void setupBrowsers()
         {
@@ -78,7 +98,7 @@ namespace PanoramaApp1
             browsers = new WebBrowser[TM.selectedCount];
             DataTemplate dt = (DataTemplate)App.Current.Resources["SmallPanoramaItemTitle"];
 
-            for(int i = 0, j=0; i < TM.linkCount; i++)
+            for (int i = 0, j = 0; i < TM.linkCount; i++)
             {
                 if (!TM.linksSelected[i])
                     continue;
@@ -92,17 +112,19 @@ namespace PanoramaApp1
                 browsers[mySelectedIndex] = new WebBrowser();
                 browsers[mySelectedIndex].Source = new Uri(TM.links[i]);
                 browsers[mySelectedIndex].IsScriptEnabled = true;
-                browsers[mySelectedIndex].Margin = new Thickness(0, -25, 0, 0);               
-                
-                browsers[mySelectedIndex].Navigated += new EventHandler<NavigationEventArgs>((object sender, NavigationEventArgs e) => {
-                    WebBrowser b = (WebBrowser)sender;                    
+                browsers[mySelectedIndex].Margin = new Thickness(0, -25, 0, 0);
+
+                browsers[mySelectedIndex].Navigated += new EventHandler<NavigationEventArgs>((object sender, NavigationEventArgs e) =>
+                {
+                    WebBrowser b = (WebBrowser)sender;
                     TM.links[myIndex] = b.Source.ToString();
                 });
 
                 pis[mySelectedIndex].Content = browsers[mySelectedIndex];
-                MainPanorama.Items.Add(pis[mySelectedIndex]);                
+                MainPanorama.Items.Add(pis[mySelectedIndex]);
 
-                pis[mySelectedIndex].GotFocus += new RoutedEventHandler((object o, RoutedEventArgs a) => {
+                pis[mySelectedIndex].GotFocus += new RoutedEventHandler((object o, RoutedEventArgs a) =>
+                {
                     TM.defaultPanoramaItem = mySelectedIndex;
                 });
             }
@@ -116,7 +138,7 @@ namespace PanoramaApp1
 
             // Set the data context of the listbox control to the sample data
             DataContext = App.ViewModel;
-            
+
             setupBrowsers();
             setupMenuItems();
             MainPanorama.DefaultItem = MainPanorama.Items[TM.defaultPanoramaItem + 1]; ;
@@ -145,18 +167,5 @@ namespace PanoramaApp1
         {
 
         }
-
-        //private void PanoramaItem_Tap(object sender, System.Windows.Input.GestureEventArgs e)
-        //{
-        //    MiniBrowser1.Navigate(new Uri("https://m.facebook.com", UriKind.Absolute));            
-        //}
-
-        //private void MiniBrowser1_Navigated(object sender, NavigationEventArgs e)
-        //{
-        //    WebBrowser b = (WebBrowser)sender;
-        //    MiniBrowser1Url.Text = b.Source.ToString();
-
-        //    MainPanorama.DefaultItem = MainPanorama.Items[1];
-        //}
     }
 }
